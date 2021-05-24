@@ -16,6 +16,51 @@ int main()
 	std::cout << "Before deletes the memory to which p1 had point\t: [ " << *p1 << "]" << std::endl;
 	p1.reset(p2.release());
 	std::cout << "After deletes the memory to which p1 had point\t: [ " << *p1 << "]" << std::endl;
-	
+	std::cout << "Test weak_ptr" << std::endl;
+	std::shared_ptr<int> dec = std::make_shared<int>(42);
+	std::weak_ptr<int> wp(dec);//point to the same object
+	std::cout << "Test object to to where \t: [" << dec << "]" << std::endl;
+	std::cout << "Test if it still exist \t: [" << wp.lock() << "]" << std::endl;
+	std::cout<<"Test  use_count \t:[ "<<dec.use_count() <<"]"<<std::endl;
+	std::weak_ptr<int> dc(dec);//point to the same object //weak share 
+	std::cout << "Test  use_count \t:[ " << dec.use_count() << "]" << std::endl;
+	auto point = dec;
+	std::cout << "Test  use_count \t:[ " << dec.use_count() << "]" << std::endl;
+	if (std::shared_ptr<int> np = wp.lock()) {
+		std::cout << "True if np is not null , inside this condition , np shares its object with p" << std::endl;
+	}
+	else {
+		std::cout << "null" << std::endl;
+	}
+
+	std::cout << "Dynamic Array" << std::endl;
+	int* pia = new int[42];
+	std::cout << "Initializing an array " << std::endl;
+	int* init = new int[10](); //value initialized to 0
+	std::string* tenStr = new std::string[10](); //block of ten empty string
+	std::cout << "New standart c++0x , braced initalized" << std::endl;
+	int* brac = new int[10]{ 0,1,2,3,4,5,6,7 };
+	std::string* bracSt = new std::string[10]{ "mic","and","you" };//remaining elements are value initalized
+	//int* bad = new int[3]{ 1,2,3,4 }; //raise and exception bad_array_new_length
+	size_t n = sizeof(int);
+	int* pAllocate = new int[n];
+	std::cout << "freeing dynamic array " << std::endl;
+	delete[] brac;
+	std::cout << "Smart pointer and dynamics array" << std::endl;
+	std::unique_ptr<int[]>up(new int[10]);
+	std::cout << "Access the elements in the array" << std::endl;
+	for (size_t i = 0; i != 10; ++i) {
+		up[i] = i;
+	}
+	std::cout << "Show value after use unique ptr to array\t:[ ";
+	for (size_t i = 0; i != 10; ++i) {
+		std::cout << up[i] << "|";
+	}
+	std::cout << "]" << std::endl;
+	up.release(); //automatically uses delete[] to destroys its pointer
+
 
 }
+
+
+
