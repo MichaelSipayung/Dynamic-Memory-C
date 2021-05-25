@@ -7,6 +7,13 @@
 #include <memory>
 #include <vector>
 #include <new> //raise an exeption
+#include <rapidjson/document.h>
+#include <rapidjson/writer.h>
+#include <rapidjson/stringbuffer.h>
+#include  <armadillo_bits/config.hpp>
+#include <armadillo>
+
+
 std::unique_ptr<int> clone(int p) {
 	return std::unique_ptr<int>(new int(p));
 }
