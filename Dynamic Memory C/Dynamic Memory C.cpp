@@ -59,6 +59,30 @@ int main()
 	std::cout << "]" << std::endl;
 	up.release(); //automatically uses delete[] to destroys its pointer
 
+	std::cout << "Manage dynamic array by shared_ptr" << std::endl;
+	std::shared_ptr<int>sp(new int[10], [](int* p) {delete[]p; });
+	std::cout << "shared_ptr doesn't support pointer arithmetic and subscript operator" << std::endl;
+	for (size_t i = 0; i != 10; ++i) {
+		*(sp.get() + i) = i;
+	}
+	sp.reset();//frees the memory 
+	std::cout << "allocator class" << std::endl;
+	std::allocator<std::string> alloc; //object that can allocate string 
+	auto const p = alloc.allocate(50); //allocate 5 unconstructed strings
+	auto q = p;
+	alloc.construct(q++);//q is the empty string
+	alloc.construct(q++, 10, 'c');  // q is ten 'c'
+	alloc.construct(q++, "hi");
+	
+	std::cout << "Destroy each constructed element" << std::endl;
+	while (q!=p)
+	{
+		alloc.destroy(--q);// free the string we actually allocated 
+		std::cout << "Destroy" << std::endl;
+	}
+
+
+
 
 }
 
