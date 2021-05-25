@@ -80,7 +80,15 @@ int main()
 		alloc.destroy(--q);// free the string we actually allocated 
 		std::cout << "Destroy" << std::endl;
 	}
-
+	std::cout << "Dealocate , free the memory " << std::endl;
+	alloc.deallocate(p, 3);
+	std::allocator<int> allocThem;
+	std::cout << "Allocator Algorithm" << std::endl;
+	std::vector<int> all{ 1,2,3,4,5,6 };
+	auto pOri = allocThem.allocate(all.size() * 2);
+	auto qOri = std::uninitialized_copy(all.begin(), all.end(), pOri);
+	std::uninitialized_fill_n(qOri, all.size(), 42);
+	
 
 
 
